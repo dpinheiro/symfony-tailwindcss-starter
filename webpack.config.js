@@ -65,11 +65,13 @@ Encore
     //.enableIntegrityHashes()
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    // .autoProvidejQuery()
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()
     //.addEntry('admin', './assets/js/admin.js')
+
+    .enableVueLoader()
 ;
 
 module.exports = Encore.getWebpackConfig();

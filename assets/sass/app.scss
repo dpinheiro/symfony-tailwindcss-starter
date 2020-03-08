@@ -1,3 +1,62 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body
+{
+    background-image: url("../images/truck1.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.font-montserrat
+{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.font-lato
+{
+    font-family: 'Lato', sans-serif;
+}
+
+#hero
+{
+    background-size: cover;
+    background-image: url('../images/truck1.jpg');
+}
+
+.centered
+{
+    @apply absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bg-white-overlay
+{
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+[v-cloak] {
+    display: none !important;
+}
+
+
+@screen md {
+
+    .vue-fixed-header--isFixed
+    {
+        padding-bottom: 56px;
+
+        header
+        {
+            @apply fixed inset-x-0 py-4;
+
+            #logo
+            {
+                @apply w-40;
+            }
+        }
+    }
+}

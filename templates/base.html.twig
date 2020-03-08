@@ -2,15 +2,311 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>DMS Trucks</title>
+        <meta name="description" content="{{ 'meta.description' | trans }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
+        <script src="https://kit.fontawesome.com/f1e88d1d69.js"></script>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+        <link href="https://fonts.googleapis.com/css?family=Lato|Montserrat:400,400i,700&display=swap" rel="stylesheet">
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="antialiased font-montserrat">
+        <div id="app">
+            <fixed-header :threshold="40">
+                <div id="home">
+                    <div class="bg-gray-300 py-2 hidden md:block">
+                        <div class="container mx-auto px-4 font-lato lg:px-6 xl:px-12">
+                            <span class="text-gray-500 text-sm">
+                                <i class="fas fa-phone mr-1"></i>
+                                (+351) 244 870 050
+                            </span>
+                            <span class="text-gray-500 text-sm ml-3">
+                                <i class="far fa-clock mr-1"></i>
+                                {{ 'schedule' | trans }}
+                            </span>
+                            <span class="text-gray-500 text-sm ml-3">
+                                <i class="fas fa-at mr-1"></i>
+                                <a href="mailto:dms@dmstrucks.com">dms@dmstrucks.com</a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <header class="py-4 fixed inset-x-0 top-0 bg-gray-100 shadow z-10 md:relative md:py-6">
+                        <div class="container mx-auto px-4 lg:px-6 xl:px-12">
+                            <div class="flex flex-col justify-between items-center relative md:flex-row">
+                                <div class="flex justify-between items-center w-full">
+                                    <div id="logo" class="w-32 md:w-48">
+                                        <a href="#">
+                                            <img src="{{ asset('build/images/logo.png') }}" />
+                                        </a>
+                                    </div>
+                                    <button id="menu-btn" type="button" class="p-1 border border-gray-500 text-gray-500 rounded md:hidden" @click="toggleMenu">
+                                        <svg class="fill-current h-4 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                                    </button>
+                                </div>
+                                <nav id="menu" class="w-full bg-gray-100 pt-6 md:w-auto md:relative md:block md:flex md:flex-row md:pt-0 md:items-center" :class="{'hidden': !menuOpen}" v-cloak>
+                                    <a href="#home" class="block py-3 text-gray-700 my-2 hover:underline md:mr-4 md:my-0 md:py-0" @click="menuOpen = false">{{ 'menu.home' | trans }}</a>
+                                    <a href="#company" class="block py-3 text-gray-700 my-2 hover:underline md:mx-4 md:my-0 md:py-0" @click="menuOpen = false">{{ 'menu.company' | trans }}</a>
+                                    <a href="#contacts" class="block py-3 text-gray-700 my-2 hover:underline md:ml-4 md:my-0 md:py-0" @click="menuOpen = false">{{ 'menu.contacts' | trans }}</a>
+                                    <div class="">
+                                        <div role="button" class="hidden uppercase text-xs items-center md:border md:border-gray-200 md:p-1 md:rounded md:ml-8 md:hover:border-yellow md:flex" :class="{'md:border-yellow': langDropdownOpen}" @click="langDropdownOpen = !langDropdownOpen">
+                                            {{ app.request.locale }}
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-2 h-2 ml-1 fill-current" viewBox="0 0 24 24"><path d="M12 21l-12-18h24z"/></svg>
+                                        </div>
+                                        <div slot="dropdown" class="mt-6 mb-4 flex justify-end md:block md:bg-white md:shadow md:rounded md:overflow-hidden md:absolute md:right-0 md:mt-0 md:mb-0" :class="{'md:hidden': !langDropdownOpen}" v-cloak>
+                                            <a href="{{ path('index', {'_locale': 'pt'}) }}" class="text-grey-darkest hover:text-white whitespace-no-wrap text-sm md:block md:px-4 md:py-3 md:bg-white md:hover:bg-yellow md:border-b">Português</a>
+                                            <a href="{{ path('index', {'_locale': 'en'}) }}" class="ml-4 text-grey-darkest hover:text-white whitespace-no-wrap text-sm md:block md:px-4 md:py-3 md:bg-white md:hover:bg-yellow md:ml-0">English</a>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                    </header>
+                </div>
+            </fixed-header>
+
+            <div class="h-screen flex flex-col">
+                <div class="h-12 md:h-0"></div>
+
+                <div id="hero" class="flex-grow relative">
+                    <div class="centered w-11/12 text-center px-1 py-8 xl:w-2/3">
+                        <h1 class="text-white uppercase text-lg leading-loose sm:text-2xl xl:text-5xl xl:leading-normal">
+                            {{ 'headline' | trans | raw }}
+                        </h1>
+                        <span class="absolute top-0 left-0 w-4 h-4 block border-white border-t-2 border-l-2"></span>
+                        <span class="absolute top-0 right-0 w-4 h-4 block border-white border-t-2 border-r-2"></span>
+                        <span class="absolute bottom-0 left-0 w-4 h-4 block border-white border-b-2 border-l-2"></span>
+                        <span class="absolute bottom-0 right-0 w-4 h-4 block border-white border-b-2 border-r-2"></span>
+                    </div>
+                </div>
+
+                <div class="bg-yellow py-6 flex-shrink-0 md:py-8">
+                    <div class="container px-4 mx-auto text-center md:flex md:justify-between md:items-center lg:px-6 xl:px-12">
+                        <div class="font-bold text-white xl:text-lg">
+                            {{ 'hero.need_information' | trans }}
+                        </div>
+                        <a href="#contacts">
+                            <button class="px-4 py-1 border border-white text-white mt-3 hover:bg-white hover:text-yellow md:mt-0">
+                                {{ 'hero.contact_us' | trans }}
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="company" class="pt-8 pb-8 bg-white xl:pt-16 xl:pb-16">
+                <div class="container mx-auto px-4 lg:px-6 xl:px-12">
+                    <div class="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-4">
+                        <div class="sm:w-1/2 sm:px-4 lg:w-1/3">
+                            <div class="relative">
+                                <img alt="" src="{{ asset('build/images/company1.jpg') }}" class="img-responsive">
+                                <div class="absolute inset-x-0 bottom-0">
+                                    <div class="bg-white-overlay mb-2 ml-8 text-sm text-gray-800 py-2 pr-3 text-right">
+                                        {{ 'about.company.title' | trans }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-gray-700 mt-4 text-sm font-lato xl:text-base">
+                                {{ 'about.company.text' | trans }}
+                            </div>
+                        </div>
+                        <div class="mt-8 sm:w-1/2 sm:mt-0 sm:px-4 lg:w-1/3">
+                            <div class="relative">
+                                <img alt="" src="{{ asset('build/images/company2.jpg') }}" class="img-responsive">
+                                <div class="absolute inset-x-0 bottom-0">
+                                    <div class="bg-white-overlay mb-2 ml-8 text-sm text-gray-800 py-2 pr-3 text-right">
+                                        {{ 'about.used_parts.title' | trans }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-gray-700 mt-4 text-sm font-lato xl:text-base">
+                                {{ 'about.used_parts.text' | trans }}
+                            </div>
+                        </div>
+                        <div class="mt-8 sm:w-1/2 sm:px-4 lg:w-1/3 lg:mt-0">
+                            <div class="relative">
+                                <img alt="" src="{{ asset('build/images/services.jpeg') }}" class="img-responsive">
+                                <div class="absolute inset-x-0 bottom-0">
+                                    <div class="bg-white-overlay mb-2 ml-8 text-sm text-gray-800 py-2 pr-3 text-right">
+                                        {{ 'about.services.title' | trans }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-gray-700 mt-4 text-sm font-lato xl:text-base">
+                                {{ 'about.services.text' | trans }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-transparent h-16 xl:h-32"></div>
+
+            <div id="contacts" class="bg-white pt-8 lg:pt-12">
+                <div class="container mx-auto px-4 lg:px-6 xl:px-12">
+                    <div class="lg:flex lg:flex-row lg:-mx-4 xl:-mx-6">
+                        <div class="lg:px-4 lg:w-2/3 xl:px-6">
+                            <div>
+                                <div class="uppercase text-gray-900 text-xl pb-1 border-yellow border-b-4 inline-block">
+                                    {{ 'message.title' | trans }}
+                                </div>
+                            </div>
+                            <div class="mt-6 text-gray-500 text-sm xl:mt-8">
+                                {{ 'message.text' | trans }}
+                            </div>
+                            <form class="mt-6" method="post" action="{{ path('contact') }}" @submit="sendContact" novalidate>
+                                <div class="xl:flex xl:-mx-2">
+                                    <div class="xl:px-2 xl:w-1/3">
+                                        <input type="text" placeholder="{{ 'message.form.name' | trans }} *" class="bg-gray-200 w-full py-2 px-4 text-gray-700 italic text-sm border border-gray-200" name="name" v-model="form.name" :class="{'border-red-500 bg-red-100': errors.name}" required>
+                                        <div class="text-xs text-red-600 font-bold mt-1" v-if="errors.name" v-cloak>{{ 'message.form.errors.name' | trans }}</div>
+                                    </div>
+                                    <div class="xl:px-2 xl:w-1/3">
+                                        <input type="email" placeholder="{{ 'message.form.email' | trans }} *" class="bg-gray-200 w-full py-2 px-4 text-gray-700 italic text-sm mt-4 border border-gray-200 xl:mt-0" v-model="form.email" :class="{'border-red-500 bg-red-100': errors.email}" name="email" required>
+                                        <div class="text-xs text-red-600 font-bold mt-1" v-if="errors.email" v-cloak>{{ 'message.form.errors.email' | trans }}</div>
+                                    </div>
+                                    <div class="xl:px-2 xl:w-1/3">
+                                        <input type="text" placeholder="{{ 'message.form.phone' | trans }}" class="bg-gray-200 w-full py-2 px-4 text-gray-700 italic text-sm mt-4 border border-gray-200 xl:mt-0" v-model="form.phone" :class="{'border-red-500 bg-red-100': errors.phone}" name="phone">
+                                        <div class="text-xs text-red-600 font-bold mt-1" v-if="errors.phone" v-cloak>{{ 'message.form.errors.phone' | trans }}</div>
+                                    </div>
+                                </div>
+                                <input type="text" placeholder="{{ 'message.form.subject' | trans }} *" class="bg-gray-200 w-full py-2 px-4 text-gray-700 italic text-sm mt-4 border border-gray-200" name="subject" v-model="form.subject" :class="{'border-red-500 bg-red-100': errors.subject}" required>
+                                <div class="text-xs text-red-600 font-bold mt-1" v-if="errors.subject" v-cloak>{{ 'message.form.errors.subject' | trans }}</div>
+
+                                <textarea placeholder="{{ 'message.form.message' | trans }} *" class="bg-gray-200 w-full py-2 px-4 text-gray-700 italic text-sm mt-4 border border-gray-200" rows="4" cols="40" name="message" v-model="form.message" :class="{'border-red-500 bg-red-100': errors.message}" required></textarea>
+                                <div class="text-xs text-red-600 font-bold mt-1" v-if="errors.message" v-cloak>{{ 'message.form.errors.message' | trans }}</div>
+
+                                <div class="bg-green-500 text-white py-3 px-3 mt-3" v-if="submitSuccess" v-cloak>
+                                    {{ 'message_sent' | trans }}
+                                </div>
+                                <div class="bg-red-500 text-white py-3 px-3 mt-3" v-if="submitError" v-cloak>
+                                    {{ 'message_error' | trans }}
+                                </div>
+
+                                <button type="submit" class="bg-yellow text-white py-2 px-3 hover:bg-white hover:text-yellow border border-yellow mt-4 text-sm">
+                                    {{ 'message.action' | trans }}
+                                    <svg class="w-5 h-5 ml-4 inline-block" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" v-show="emailLoading" v-cloak>
+                                        <defs>
+                                            <linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a">
+                                                <stop stop-color="#fff" stop-opacity="0" offset="0%"/>
+                                                <stop stop-color="#fff" stop-opacity=".631" offset="63.146%"/>
+                                                <stop stop-color="#fff" offset="100%"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <g fill="none" fill-rule="evenodd">
+                                            <g transform="translate(1 1)">
+                                                <path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2" stroke="url(#a)" stroke-width="2">
+                                                    <animateTransform
+                                                            attributeName="transform"
+                                                            type="rotate"
+                                                            from="0 18 18"
+                                                            to="360 18 18"
+                                                            dur="0.9s"
+                                                            repeatCount="indefinite" />
+                                                </path>
+                                                <circle fill="#fff" cx="36" cy="18" r="1">
+                                                    <animateTransform
+                                                            attributeName="transform"
+                                                            type="rotate"
+                                                            from="0 18 18"
+                                                            to="360 18 18"
+                                                            dur="0.9s"
+                                                            repeatCount="indefinite" />
+                                                </circle>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="mt-12 lg:mt-0 lg:px-4 lg:w-1/3 xl:px-6">
+                            <div>
+                                <div class="uppercase text-gray-900 text-xl pb-1 border-yellow border-b-4 inline-block">
+                                    {{ 'contact.title' | trans }}
+                                </div>
+                            </div>
+                            <div class="mt-6 xl:mt-8">
+                                <div class="flex">
+                                    <div class="w-8 text-center pr-2">
+                                        <i class="fas fa-map-marker-alt text-yellow"></i>
+                                    </div>
+                                    <div class="text-gray-400 text-sm">
+                                        Estrada Nacional nº1 - Vale Gracioso<br />
+                                        2400-827 Azoia, Portugal
+                                    </div>
+                                </div>
+                                <div class="flex mt-3">
+                                    <div class="w-8 text-center pr-2">
+                                        <i class="fas fa-phone text-yellow"></i>
+                                    </div>
+                                    <div class="text-gray-400 text-sm">
+                                        (+351) 244 870 050
+                                    </div>
+                                </div>
+                                <div class="flex mt-3">
+                                    <div class="w-8 text-center pr-2">
+                                        <i class="fas fa-at text-yellow"></i>
+                                    </div>
+                                    <div class="text-gray-400 text-sm">
+                                        <a href="mailto:dms@dmstrucks.com">dms@dmstrucks.com</a>
+                                    </div>
+                                </div>
+                                <div class="flex mt-3">
+                                    <div class="w-8 text-center pr-2">
+                                        <i class="far fa-clock text-yellow"></i>
+                                    </div>
+                                    <div class="text-gray-400 text-sm">
+                                        {{ 'schedule' | trans }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 xl:mt-20">
+                    <div class="container mx-auto px-4 lg:px-6 xl:px-12">
+                        <div>
+                            <div class="uppercase text-gray-900 text-xl pb-1 border-yellow border-b-4 inline-block">
+                                {{ 'find.title' | trans }}
+                            </div>
+                        </div>
+                        <div id="map" class="w-full h-64 mt-6 xl:mt-8"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white pt-10 md:pt-12">
+                <div class="container mx-auto px-4 text-gray-400 text-xs lg:px-6 xl:px-12">
+                    Empresa aderente do Centro Nacional de Informação e Arbitragem de Conflitos de Consumo (www.arbitragemdeconsumo.org), sede CNIACC-Faculdade de Direito Universidade Nova de Lisboa, Campus de Campolide, 1099-032 Lisboa
+                </div>
+            </div>
+
+            <div class="bg-white pt-10 md:pt-12">
+                <div class="bg-yellow">
+                    <div class="container mx-auto px-4 text-white text-xs py-4 text-center md:py-6 lg:px-6 xl:px-12">
+                        ©{{ "now" | date('Y') }} All Rights Reserved. • Design by <a href="mailto:diogormpinheiro@gmail.com">Diogo Pinheiro</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            <script type="text/javascript">
+                function initMap() {
+                    const position = { lat: 39.703984, lng: -8.827161 };
+                    const map = new google.maps.Map(
+                        document.getElementById('map'), {zoom: 16, center: position}
+                    );
+                    const marker = new google.maps.Marker({position: position, map: map});
+                }
+            </script>
+            <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkPeQbCsFChFGMHQMJvKkREqtjDRtOc0Y&callback=initMap">
+            </script>
         {% endblock %}
     </body>
 </html>
