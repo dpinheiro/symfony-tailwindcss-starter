@@ -3,7 +3,7 @@
         "@fullhuman/postcss-purgecss": "^1.2.0",
         "@symfony/webpack-encore": "^0.27.0",
         "core-js": "^3.0.0",
-        "node-sass": "^4.12.0",
+        "node-sass": "^7.0.0",
         "postcss-loader": "^3.0.0",
         "sass-loader": "^7.0.1",
         "tailwind": "^4.0.0",
